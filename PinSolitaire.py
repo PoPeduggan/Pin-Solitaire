@@ -22,18 +22,28 @@ for x in range(16):
 
 def toggle(x, y):
 
-    if btn[x-2][y].cget("text") == "0" and btn[x-1][y].cget("text") == "1":
+    if x-2 >= 0 and btn[x-2][y].cget("text") == "0" and btn[x-1][y].cget("text") == "1":
         btn[x-2][y].config(text = "M", command = lambda direction = "left": jump(x,y,direction))
 
-    
-    if btn[x+2][y].cget("text") == "0" and btn[x+1][y].cget("text") == "1":
-        btn[x+2][y].config(text = "M", command = lambda direction = "right": jump(x,y,direction))
+    while True:
+        try:
+            if btn[x+2][y].cget("text") == "0" and btn[x+1][y].cget("text") == "1":
+                btn[x+2][y].config(text = "M", command = lambda direction = "right": jump(x,y,direction))
+            break
+        except IndexError:
+            break
 
-    if btn[x][y-2].cget("text") == "0" and btn[x][y-1].cget("text") == "1":
+    if y-2 >= 0 and btn[x][y-2].cget("text") == "0" and btn[x][y-1].cget("text") == "1":
         btn[x][y-2].config(text = "M", command = lambda direction = "up": jump(x,y,direction))
+        
 
-    if btn[x][y+2].cget("text") == "0" and btn[x][y+1].cget("text") == "1":
-        btn[x][y+2].config(text = "M", command = lambda direction = "down": jump(x,y,direction))
+    while True:
+        try:
+            if btn[x][y+2].cget("text") == "0" and btn[x][y+1].cget("text") == "1":
+                btn[x][y+2].config(text = "M", command = lambda direction = "down": jump(x,y,direction))
+            break
+        except IndexError:
+            break
 
 def jump(x, y, direction):
 
@@ -41,11 +51,21 @@ def jump(x, y, direction):
         if btn[x][y-2].cget("text") == "M":
             btn[x][y-2].config(text = "0", command ="")
 
-        if btn[x+2][y].cget("text") == "M":
-            btn[x+2][y].config(text = "0", command ="")
+        while True:
+            try:
+                if btn[x+2][y].cget("text") == "M":
+                    btn[x+2][y].config(text = "0", command ="")
+                break
+            except IndexError:
+                break
 
-        if btn[x][y+2].cget("text") == "M":
-            btn[x][y+2].config(text = "0", command ="")
+        while True:
+            try:
+                if btn[x][y+2].cget("text") == "M":
+                    btn[x][y+2].config(text = "0", command ="")
+                break
+            except IndexError:
+                break
 
         btn[x][y].config(text = "0", command ="")
         btn[x-2][y].config(text = "1", command =lambda xVar= (x-2), yVar = y: toggle(xVar, yVar))
@@ -55,8 +75,13 @@ def jump(x, y, direction):
         if btn[x][y-2].cget("text") == "M":
             btn[x][y-2].config(text = "0", command ="")
 
-        if btn[x][y+2].cget("text") == "M":
-            btn[x][y+2].config(text = "0", command ="")
+        while True:
+            try:
+                if btn[x][y+2].cget("text") == "M":
+                    btn[x][y+2].config(text = "0", command ="")
+                break
+            except IndexError:
+                break
 
         if btn[x-2][y].cget("text") == "M":
             btn[x-2][y].config(text = "0", command ="")
@@ -69,9 +94,13 @@ def jump(x, y, direction):
         if btn[x][y-2].cget("text") == "M":
             btn[x][y-2].config(text = "0", command ="")
 
-        if btn[x+2][y].cget("text") == "M":
-            btn[x+2][y].config(text = "0", command ="")
-
+        while True:
+            try:
+                if btn[x+2][y].cget("text") == "M":
+                    btn[x+2][y].config(text = "0", command ="")
+                break
+            except IndexError:
+                break
         if btn[x-2][y].cget("text") == "M":
             btn[x-2][y].config(text = "0", command ="")
 
@@ -80,11 +109,21 @@ def jump(x, y, direction):
         btn[x][y+1].config(text = "0", command ="")
 		
     if direction == "up":
-        if btn[x][y+2].cget("text") == "M":
-            btn[x][y+2].config(text = "0", command ="")
+        while True:
+            try:
+                if btn[x][y+2].cget("text") == "M":
+                    btn[x][y+2].config(text = "0", command ="")
+                break
+            except IndexError:
+                break
 
-        if btn[x+2][y].cget("text") == "M":
-            btn[x+2][y].config(text = "0", command ="")
+        while True:
+            try:
+                if btn[x+2][y].cget("text") == "M":
+                    btn[x+2][y].config(text = "0", command ="")
+                break
+            except IndexError:
+                break
 
         if btn[x-2][y].cget("text") == "M":
             btn[x-2][y].config(text = "0", command ="")
