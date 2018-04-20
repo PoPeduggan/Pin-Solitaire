@@ -2,6 +2,12 @@ import tkinter as tk
 
 root=tk.Tk()
 
+imageEmpty = tk.PhotoImage(file="Resources\\imageEmpty.gif")
+imagemove = tk.PhotoImage(file="Resources\\imagemove.gif")
+imagePeg = tk.PhotoImage(file="Resources\\imagePeg.gif")
+imageCorner = tk.PhotoImage(file="Resources\\imageBoard.gif")
+imageTitle = tk.PhotoImage(file="Resources\\title.gif")
+
 btn=[[0 for x in range(7)]for y in range(7)]
 highscoreTable = [["" for x in range (0, 2)]for y in range(0, 10)]
 
@@ -23,10 +29,10 @@ def drawBoard():
     for x in range(7):
         for y in range(7):
             btn[x][y] = tk.Button(root, command = lambda xVar = x, yVar = y :toggle(xVar, yVar))
-            btn[x][y].config(text = "1")
+            btn[x][y].config(text = "1", image=imagePeg)
             btn[x][y].grid(column=x, row=y)
 
-    btn[3][3].config(text = "0")
+    btn[3][3].config(text = "0", image=imageEmpty)
 
     lst_xval=[btn[0][0], btn[0][1],btn[1][0], btn[1][1],
     btn[0][5], btn[0][6],btn[1][5], btn[1][6],
@@ -34,7 +40,7 @@ def drawBoard():
     btn[5][5], btn[5][6],btn[6][5], btn[6][6]]
 
     for x in range(16):
-        lst_xval[x].config(text = "X")
+        lst_xval[x].config(text = "X", image=imageCorner)
 
     Wquit = tk.Button(root, text = "Finish", command = lambda: endGame())
     Wquit.grid(column = 6, row = 12)
@@ -47,24 +53,24 @@ def drawBoard():
 def toggle(x, y):
 
     if x-2 >= 0 and btn[x-2][y].cget("text") == "0" and btn[x-1][y].cget("text") == "1":
-        btn[x-2][y].config(text = "M", command = lambda direction = "left": jump(x,y,direction))
+        btn[x-2][y].config(text = "M", image = imageMove, command = lambda direction = "left": jump(x,y,direction))
 
     while True:
         try:
             if btn[x+2][y].cget("text") == "0" and btn[x+1][y].cget("text") == "1":
-                btn[x+2][y].config(text = "M", command = lambda direction = "right": jump(x,y,direction))
+                btn[x+2][y].config(text = "M", image = imageMove command = lambda direction = "right": jump(x,y,direction))
             break
         except IndexError:
             break
 
     if y-2 >= 0 and btn[x][y-2].cget("text") == "0" and btn[x][y-1].cget("text") == "1":
-        btn[x][y-2].config(text = "M", command = lambda direction = "up": jump(x,y,direction))
+        btn[x][y-2].config(text = "M",image = imageMove, command = lambda direction = "up": jump(x,y,direction))
         
 
     while True:
         try:
             if btn[x][y+2].cget("text") == "0" and btn[x][y+1].cget("text") == "1":
-                btn[x][y+2].config(text = "M", command = lambda direction = "down": jump(x,y,direction))
+                btn[x][y+2].config(text = "M"image = imageMove, command = lambda direction = "down": jump(x,y,direction))
             break
         except IndexError:
             break
@@ -73,12 +79,12 @@ def jump(x, y, direction):
 
     if direction == "left":
         if btn[x][y-2].cget("text") == "M":
-            btn[x][y-2].config(text = "0", command ="")
+            btn[x][y-2].config(text = "0",image = imageEmpty, command ="")
 
         while True:
             try:
                 if btn[x+2][y].cget("text") == "M":
-                    btn[x+2][y].config(text = "0", command ="")
+                    btn[x+2][y].config(text = "0", image=imageEmpty, command ="")
                 break
             except IndexError:
                 break
@@ -86,57 +92,57 @@ def jump(x, y, direction):
         while True:
             try:
                 if btn[x][y+2].cget("text") == "M":
-                    btn[x][y+2].config(text = "0", command ="")
+                    btn[x][y+2].config(text = "0", image=imageEmpty command ="")
                 break
             except IndexError:
                 break
 
-        btn[x][y].config(text = "0", command ="")
-        btn[x-2][y].config(text = "1", command =lambda xVar= (x-2), yVar = y: toggle(xVar, yVar))
-        btn[x-1][y].config(text = "0", command ="")
+        btn[x][y].config(text = "0", imageEmpty, command ="")
+        btn[x-2][y].config(text = "1", image = imagePeg, command =lambda xVar= (x-2), yVar = y: toggle(xVar, yVar))
+        btn[x-1][y].config(text = "0", image= ImageEmpty, command ="")
         
     if direction == "right":
         if btn[x][y-2].cget("text") == "M":
-            btn[x][y-2].config(text = "0", command ="")
+            btn[x][y-2].config(text = "0", image= imageEmpty, command ="")
 
         while True:
             try:
                 if btn[x][y+2].cget("text") == "M":
-                    btn[x][y+2].config(text = "0", command ="")
+                    btn[x][y+2].config(text = "0", image= imageEmpty, command ="")
                 break
             except IndexError:
                 break
 
         if btn[x-2][y].cget("text") == "M":
-            btn[x-2][y].config(text = "0", command ="")
+            btn[x-2][y].config(text = "0", image= imageEmpty, command ="")
 
-        btn[x][y].config(text = "0", command ="")
-        btn[x+2][y].config(text = "1", command =lambda xVar = (x+2), yVar = y: toggle(xVar, yVar))
-        btn[x+1][y].config(text = "0", command ="")
+        btn[x][y].config(text = "0", image= imageEmpty, command ="")
+        btn[x+2][y].config(text = "1", image=imagePeg, command =lambda xVar = (x+2), yVar = y: toggle(xVar, yVar))
+        btn[x+1][y].config(text = "0", image= imageEmpty, command ="")
 		
     if direction == "down":
         if btn[x][y-2].cget("text") == "M":
-            btn[x][y-2].config(text = "0", command ="")
+            btn[x][y-2].config(text = "0", image = imageEmpty, command ="")
 
         while True:
             try:
                 if btn[x+2][y].cget("text") == "M":
-                    btn[x+2][y].config(text = "0", command ="")
+                    btn[x+2][y].config(text = "0", image = imageEmpty, command ="")
                 break
             except IndexError:
                 break
         if btn[x-2][y].cget("text") == "M":
-            btn[x-2][y].config(text = "0", command ="")
+            btn[x-2][y].config(text = "0", image = imageEmpty, command ="")
 
-        btn[x][y].config(text = "0", command ="")
+        btn[x][y].config(text = "0", image= iamgeEmptycommand ="")
         btn[x][y+2].config(text = "1", command = lambda xVar= x, yVar = (y+2): toggle(xVar, yVar))
-        btn[x][y+1].config(text = "0", command ="")
+        btn[x][y+1].config(text = "0", image = imageEmpty, command ="")
 		
     if direction == "up":
         while True:
             try:
                 if btn[x][y+2].cget("text") == "M":
-                    btn[x][y+2].config(text = "0", command ="")
+                    btn[x][y+2].config(text = "0", image = imageEmpty,command ="")
                 break
             except IndexError:
                 break
@@ -144,17 +150,17 @@ def jump(x, y, direction):
         while True:
             try:
                 if btn[x+2][y].cget("text") == "M":
-                    btn[x+2][y].config(text = "0", command ="")
+                    btn[x+2][y].config(text = "0", image = imageEmpty,command ="")
                 break
             except IndexError:
                 break
 
         if btn[x-2][y].cget("text") == "M":
-            btn[x-2][y].config(text = "0", command ="")
+            btn[x-2][y].config(text = "0", image = imageEmpty,command ="")
 
-        btn[x][y].config(text = "0", command ="")
-        btn[x][y-2].config(text = "1", command =lambda xVar= x, yVar=(y-2): toggle(xVar, yVar))
-        btn[x][y-1].config(text = "0", command ="")
+        btn[x][y].config(text = "0", image = imageEmpty,command ="")
+        btn[x][y-2].config(text = "1", iamge = imagePeg, command =lambda xVar= x, yVar=(y-2): toggle(xVar, yVar))
+        btn[x][y-1].config(text = "0", image = imageEmpty,command ="")
 
 def endGame():
     
