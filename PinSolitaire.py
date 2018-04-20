@@ -4,21 +4,28 @@ root=tk.Tk()
 
 btn=[[0 for x in range(7)]for y in range(7)]
 
-for x in range(7):
-    for y in range(7):
-        btn[x][y] = tk.Button(root, command = lambda xVar = x, yVar = y :toggle(xVar, yVar))
-        btn[x][y].config(text = "1")
-        btn[x][y].grid(column=x, row=y)
+start = tk.Button(root, text = "Start", command = lambda : drawBoard())
+start.grid(column=5, row=30, pady=10,padx=10)
 
-btn[3][3].config(text = "0")
+def drawBoard():
 
-lst_xval=[btn[0][0], btn[0][1],btn[1][0], btn[1][1],
-btn[0][5], btn[0][6],btn[1][5], btn[1][6],
-btn[5][0], btn[5][1],btn[6][0], btn[6][1],
-btn[5][5], btn[5][6],btn[6][5], btn[6][6]]
+    for x in range(7):
+        for y in range(7):
+            btn[x][y] = tk.Button(root, command = lambda xVar = x, yVar = y :toggle(xVar, yVar))
+            btn[x][y].config(text = "1")
+            btn[x][y].grid(column=x, row=y)
 
-for x in range(16):
-    lst_xval[x].config(text = "X")
+    btn[3][3].config(text = "0")
+
+    lst_xval=[btn[0][0], btn[0][1],btn[1][0], btn[1][1],
+    btn[0][5], btn[0][6],btn[1][5], btn[1][6],
+    btn[5][0], btn[5][1],btn[6][0], btn[6][1],
+    btn[5][5], btn[5][6],btn[6][5], btn[6][6]]
+
+    for x in range(16):
+        lst_xval[x].config(text = "X")
+
+    start.grid_remove()
 
 def toggle(x, y):
 
